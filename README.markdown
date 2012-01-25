@@ -1,14 +1,14 @@
 Torpedo
 =======
 
-Torpedo allows you to schedule HTTP callbacks via a REST API.
+Torpedo is daemon which allows you to schedule HTTP callbacks via a REST API.
 
 Say you need to send out a message at exactly 8:52 am. But your web framework doesn't support scheduling jobs and setting up a message queue is overkill.
 
 1. Run Torpedo:
 
 
-		torpedo --port 7931 --address 127.0.0.1
+		torpedo --address 127.0.0.1 --port 7931
 
 
 
@@ -49,7 +49,7 @@ Documentation
 * Response:
 
 		{
-			"url":"http://localhost:port/api/callbacks/<id>/",
+			"url":"http://127.0.0.1:7931/api/callbacks/<id>/",
 		}
 
 **Delete callback:**

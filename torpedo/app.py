@@ -158,8 +158,7 @@ def main():
     tornado.options.define('address', default='127.0.0.1', help='Host address')
     tornado.options.define('port', default=7931, help='Port number')
     tornado.options.define('config', default='/etc/torpedo/torpedo.conf', help='Path to config file')
-    tornado.options.define('log', default='torpedo.log', help='Path to log file')
-    tornado.options.define('debug', default=False, help="Enable console debugging", type=bool)
+    tornado.options.define('development', default=False, help="Run in development mode", type=bool)
     tornado.options.parse_command_line()
 
     # Read config
@@ -170,21 +169,7 @@ def main():
     # Options
     TORPEDO_PORT = tornado.options.options.port
     TORPEDO_ADDRESS = tornado.options.options.address
-    LOG_PATH = tornado.options.options.log
-    DEBUG = tornado.options.options.debug
-
-    # Configure logging
-    logger = logging.getLogger()
-    if DEBUG:
-        logger.setLevel(logging.DEBUG)
-        tornado.options.enable_pretty_logging()
-    else:
-        LOG_FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
-        formatter = logging.Formatter(LOG_FORMAT)
-        flog = logging.FileHandler(LOG_PATH)
-        flog.setFormatter(formatter)
-        logger.addHandler(flog)
-        logger.setLevel(logging.ERROR)
+    DEVELOPMENT = tornado.options.options.development
 
     # Setup Tornado
     application = tornado.web.Application(
@@ -193,7 +178,7 @@ def main():
             (r'/api/callbacks/', ListOrCreateCallbackHandler),
             (r'/api/callbacks/([a-zA-Z0-9]+)/', DeleteCallbackHandler),
         ],
-        debug=DEBUG)
+        debug=DEVELOPMENT)
     application.listen(port=TORPEDO_PORT, address=TORPEDO_ADDRESS)
 
     # Start Tornado

@@ -1,7 +1,7 @@
 Torpedo
 =======
 
-Torpedo is daemon which allows you to schedule HTTP callbacks via a REST API.
+Torpedo is daemon which allows you to schedule HTTP callbacks via a HTTP API.
 
 Say you need to send out a message at exactly 8:52 am. But your web framework doesn't support scheduling jobs and setting up a message queue is overkill.
 
